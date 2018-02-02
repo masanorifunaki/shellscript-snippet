@@ -1,0 +1,172 @@
+{
+/*
+	// Place your snippets for Shell Script here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	"Print to console": {
+		"prefix": "log",
+		"body": [
+			"console.log('$1');",
+			"$2"
+		],
+		"description": "Log output to console"
+	}
+*/
+	"printf ": {
+		"prefix": "printf",
+		"body": [
+			"printf '%s\\n' \"${1}\"",
+		],
+		"description": "printfを使います。"
+	},
+	"init": {
+		"prefix": "init",
+		"body": [
+			"#!/bin/bash",
+			"# 実行コマンドを表示",
+			"# set -v",
+			"# 実行しようとしているコマンドが表示される。変数は展開される",
+			"set -o xtrace",
+			"readonly SCRIPT_NAME=\\${0##*\/}"
+		],
+		"description": "初期設定です。"
+	},
+	"case": {
+		"prefix": "case",
+		"body": [
+			"case \"$${1}\" in",
+			"\t${2}",
+			"esac",
+		],
+		"description": "case分です。"
+	},
+	"printf_error": {
+		"prefix": "printf_error",
+		"body": [
+			"printf '%s\\n' \"\\${SCRIPT_NAME}: '$${1}': \" 1>&2"
+		],
+		"description": "エラー文を出力するときに使う。"
+	},
+	"if [[ ]]; then": {
+		"prefix": "if",
+		"body": [
+			"if [[ ${1} ]]; then",
+			"\t${2}",
+			"fi"
+		],
+		"description": "if文の定型文"
+	},
+	"if [[ $# -le 0 ]]; then": {
+		"prefix": "if$#",
+		"body": [
+			"if [[ $# -le 0 ]]; then",
+			"\tprintf '%s\\n' \"\\${SCRIPT_NAME}: ${2}\" 1>&2",
+			"\t${3}",
+			"fi"
+		],
+		"description": "引数が0のときにエラー文を出力する。"
+	},
+	"if [[ -z $ ]]; then": {
+		"prefix": "if-z",
+		"body": [
+			"if [[ -z $${1} ]]; then",
+			"\tprintf '%s\\n' \"\\${SCRIPT_NAME}: ${2}\" 1>&2",
+			"\t${3}",
+			"fi"
+		],
+		"description": "引数が空のときにエラー文を出力する。"
+	},
+	"return": {
+		"prefix": "return",
+		"body": [
+			"return ${1}",
+		],
+		"description": "関数を終了させるときに使う。"
+	},
+	"exit": {
+		"prefix": "exit",
+		"body": [
+			"exit ${1}",
+		],
+		"description": "シェルスクリプトを終了させるときに使う。"
+	},
+	"if [[ ! -f $ ]]; then": {
+		"prefix": "if-",
+		"body": [
+			"if [[ ! -${1} $${2} ]]; then",
+			"\tprintf '%s\\n' \"\\${SCRIPT_NAME}: '$${3}':\" 1>&2",
+			"\t${4}",
+			"fi"
+		],
+		"description": "引数がファイルorディレクトリではないときにエラー文を出力する。"
+	},
+	"if [[ $? -ne 0 ]]; then": {
+		"prefix": "if$?",
+		"body": [
+			"if [[ $? -ne 0 ]]; then",
+			"\t${1}",
+			"\t${2}",
+			"fi"
+		],
+		"description": "直前のコマンド終了ステータスが1以上のときに使う"
+	},
+	"${BASH_REMATCH[]}": {
+		"prefix": "BASHRE",
+		"body": [
+			"\\${BASH_REMATCH[${1}]",
+		],
+		"description": "${BASH_REMATCH[]}"
+	},
+	"cat << END": {
+		"prefix": "cat<<END",
+		"body": [
+			"cat << END",
+			"${1}",
+			"END"
+		],
+		"description": "ヒアドキュメント"
+	},
+	"readonly VERSION=": {
+		"prefix": "readonly VERSION=",
+		"body": [
+			"readonly VERSION=${1}",
+		],
+		"description": "ヒアドキュメント"
+	},
+	"print_version()": {
+		"prefix": "print_version()",
+		"body": [
+			"print_version()",
+			"{",
+			"\tcat << END",
+			"\\$SCRIPT_NAME version \\$VERSION",
+			"END",
+			"}"
+		],
+		"description": "print_version()関数"
+	},
+	"print_error()": {
+		"prefix": "print_error()",
+		"body": [
+			"print_error()",
+			"{",
+			"\tcat << END 1>&2",
+			"\\$SCRIPT_NAME: \\$${1}",
+			"END",
+			"}"
+		],
+		"description": "print_error()関数"
+	},
+	"for": {
+		"prefix": "for",
+		"body": [
+			"for i in \"\\$@\"",
+			"do",
+			"\t${1}",
+			"done",
+		],
+		"description": "forループ"
+	}
+}
